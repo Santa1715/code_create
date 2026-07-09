@@ -1,0 +1,800 @@
+/* ============================================
+   PROYECTO: CODE & CREATE
+   Taller de Desarrollo Web para Jóvenes
+   Torre Guayacán - Conjunto Residencial Bosque del Neverí
+   
+   Autor: Leonel Rondón - CI: 32.079.527
+   Universidad Bicentenaria de Aragua
+   Servicio Comunitario - Ingeniería de Sistemas
+   ============================================ */
+
+/* 1. VARIABLES DE TEMA */
+:root {
+    --bg: rgba(255, 255, 255, 0.75);
+    --text: #111827;
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --card: rgba(255, 255, 255, 0.85);
+    --shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+    --radius: 16px;
+    --font: system-ui, -apple-system, sans-serif;
+    --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] {
+    --bg: rgba(15, 23, 42, 0.75);
+    --text: #e2e8f0;
+    --card: rgba(30, 41, 59, 0.85);
+    --shadow: 0 8px 24px rgb(0 0 0 / 0.5);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* 2. RESET */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+html, body {
+    min-height: 100vh;
+}
+
+/* 3. FONDO DE PÁGINA */
+body {
+    font-family: var(--font);
+    color: var(--text);
+    line-height: 1.6;
+    background-image: url('../assets/images/starter-kit-logo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.55);
+    z-index: -1;
+    pointer-events: none;
+}
+
+[data-theme="dark"] body::before {
+    background: rgba(15, 23, 42, 0.75);
+}
+
+/* 4. HEADER */
+.hero {
+    padding: 1.5rem 1.5rem 2rem;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow);
+}
+
+.logo {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover { 
+    color: var(--primary);
+}
+
+/* 5. INICIALES EDITABLES */
+.initials-input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px dashed rgba(79, 70, 229, 0.4);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 90px;
+    text-align: center;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.initials-input::placeholder {
+    color: rgba(128, 128, 128, 0.6);
+    font-weight: 400;
+    font-style: italic;
+}
+
+.initials-input:hover {
+    background: rgba(79, 70, 229, 0.08);
+    border-bottom-color: var(--primary);
+}
+
+.initials-input:focus {
+    background: rgba(79, 70, 229, 0.12);
+    border-bottom: 2px solid var(--primary);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
+}
+
+#theme-toggle {
+    background: var(--primary);
+    border: none;
+    color: white;
+    padding: 0.5rem 0.8rem;
+    border-radius: 99px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.2s, transform 0.2s;
+}
+
+#theme-toggle:hover { 
+    background: var(--primary-hover);
+    transform: scale(1.05);
+}
+
+/* 6. TÍTULO CON EFECTO GLOW */
+.hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 1rem;
+}
+
+.page-title {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    letter-spacing: -2px;
+}
+
+.title-glow {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+    filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.5));
+    animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        filter: drop-shadow(0 0 15px rgba(124, 58, 237, 0.4));
+    }
+    to {
+        filter: drop-shadow(0 0 30px rgba(236, 72, 153, 0.6));
+    }
+}
+
+.subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 1rem;
+    opacity: 0.9;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    opacity: 0.85;
+}
+
+.highlight {
+    background: linear-gradient(120deg, rgba(79, 70, 229, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* 7. BOTONES DEL HERO */
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: linear-gradient(135deg, var(--primary), #7c3aed);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover { 
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.6);
+}
+
+.btn-contacto {
+    background: linear-gradient(135deg, var(--primary), #7c3aed);
+}
+
+.btn-registro {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    animation: pulse-registro 2s infinite;
+}
+
+.btn-registro:hover {
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+@keyframes pulse-registro {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(16, 185, 129, 0.7);
+    }
+}
+
+.btn-whatsapp-hero {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    animation: pulse-whatsapp 2s infinite;
+}
+
+.btn-whatsapp-hero:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+    background: linear-gradient(135deg, #128C7E, #075E54);
+}
+
+@keyframes pulse-whatsapp {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(37, 211, 102, 0.7);
+    }
+}
+
+/* 8. CONTENIDO PRINCIPAL */
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem 2rem;
+}
+
+.glass-card {
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    padding: 1.8rem;
+    border-radius: var(--radius);
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--glass-border);
+}
+
+section h2 {
+    margin-bottom: 1rem;
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.project-card {
+    border-left: 4px solid var(--primary);
+    padding: 1rem;
+    margin: 1rem 0;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+}
+
+[data-theme="dark"] .project-card {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.project-card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.tags {
+    margin: 0.5rem 0;
+}
+
+.tag {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+    margin-top: 0.3rem;
+    font-weight: 500;
+}
+
+.link-external {
+    display: inline-block;
+    margin-top: 0.8rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.link-external:hover {
+    color: var(--primary-hover);
+}
+
+/* 9. FORMULARIO */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 500px;
+    margin-top: 1rem;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-weight: 500;
+    color: var(--text);
+}
+
+input, textarea {
+    padding: 0.75rem;
+    border: 2px solid rgba(209, 213, 219, 0.5);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+button[type="submit"] {
+    padding: 0.85rem;
+    background: linear-gradient(135deg, var(--primary), #7c3aed);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button[type="submit"]:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(79, 70, 229, 0.4);
+}
+
+.form-status {
+    min-height: 1.5rem;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
+/* 10. TEXTOS EDITABLES */
+.editable-text {
+    cursor: text;
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin: -4px -8px;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 1.6em;
+    outline: none;
+}
+
+.editable-text:hover {
+    background: rgba(79, 70, 229, 0.08);
+    border: 1px dashed rgba(79, 70, 229, 0.4);
+}
+
+.editable-text:focus {
+    background: rgba(79, 70, 229, 0.12);
+    border: 2px solid var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.editable-text::after {
+    content: '✏️';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.editable-text:hover::after {
+    opacity: 0.6;
+}
+
+.editable-text:focus::after {
+    opacity: 1;
+}
+
+/* 11. FOOTER */
+footer {
+    text-align: center;
+    padding: 1.5rem 1.5rem 2rem;
+    font-size: 0.9rem;
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    margin-top: 1rem;
+    border-top: 1px solid var(--glass-border);
+    color: var(--text);
+}
+
+/* 12. RESPONSIVE */
+@media (max-width: 768px) {
+    nav { 
+        flex-direction: column; 
+        gap: 0.8rem;
+        border-radius: 20px;
+        padding: 1rem;
+    }
+    
+    .hero { 
+        padding: 1rem 1rem 1.5rem;
+    }
+    
+    .page-title {
+        font-size: clamp(2rem, 10vw, 3.5rem);
+    }
+    
+    .initials-input {
+        width: 70px;
+        font-size: 1rem;
+    }
+    
+    .glass-card { 
+        padding: 1.3rem; 
+    }
+    
+    main {
+        padding: 0.8rem 1rem 1.5rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+}
+
+/* 13. ESTILOS PARA PÁGINA DE REGISTRO */
+.registro-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--glass-border);
+    text-align: center;
+}
+
+.registro-container h1 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.registro-container p {
+    margin-bottom: 2rem;
+    color: var(--text);
+    opacity: 0.9;
+}
+
+.registro-container form {
+    max-width: 100%;
+    margin: 0;
+}
+
+.registro-container label {
+    display: block;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.registro-container input {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    border: 2px solid rgba(209, 213, 219, 0.5);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.registro-container input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.registro-container button[type="submit"] {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, var(--primary), #7c3aed);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.registro-container button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(79, 70, 229, 0.4);
+}
+
+.btn-volver {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.btn-volver:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+#mensaje {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    display: none;
+}
+
+#mensaje:not(:empty) {
+    display: block;
+}
+
+/* 14. MENSAJE DE REGISTRO EXITOSO */
+.mensaje-exitoso,
+.mensaje-error-container {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    animation: fadeIn 0.5s ease;
+}
+
+.mensaje-exitoso {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.15));
+    border: 2px solid #10b981;
+}
+
+.mensaje-error-container {
+    background: rgba(220, 38, 38, 0.1);
+    border: 2px solid #dc2626;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.registro-exitoso h3 {
+    color: #059669;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.bienvenida {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+}
+
+.codigo-confirmacion {
+    background: white;
+    border: 2px dashed #4f46e5;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+}
+
+[data-theme="dark"] .codigo-confirmacion {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.codigo-label {
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.codigo-valor {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #4f46e5;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    margin: 0.5rem 0;
+    text-shadow: 2px 2px 4px rgba(79, 70, 229, 0.2);
+}
+
+.codigo-nota {
+    font-size: 0.85rem;
+    color: var(--text);
+    opacity: 0.7;
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.info-taller {
+    background: rgba(79, 70, 229, 0.08);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    text-align: left;
+}
+
+.info-taller p {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+    color: var(--text);
+}
+
+.grupos-label {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1.5rem 0 1rem;
+    color: var(--text);
+}
+
+.botones-grupos {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+
+.btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: white;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    animation: pulse-whatsapp-btn 2s infinite;
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.6);
+}
+
+@keyframes pulse-whatsapp-btn {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(37, 211, 102, 0.7);
+    }
+}
+
+.nota-final {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.8;
+    margin-top: 1.5rem;
+    font-style: italic;
+}
+
+.mensaje-error {
+    color: #dc2626;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .codigo-valor {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+    }
+    
+    .btn-whatsapp {
+        width: 100%;
+        justify-content: center;
+    }
+}

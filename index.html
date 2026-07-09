@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portafolio personal - Code & Create">
+    <title>Code & Create | Tu Primera Web Profesional</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+</head>
+<body>
+    <header class="hero">
+        <nav>
+            <a href="#inicio" class="logo">
+                👨‍💻 <input type="text" id="userInitials" class="initials-input" placeholder="Tus Iniciales" maxlength="5" value="LR">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#sobre-mi">Sobre mí</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <button id="theme-toggle" aria-label="Cambiar tema">🌙</button>
+        </nav>
+        
+        <div class="hero-content">
+            <h1 class="page-title">
+                <span class="title-glow">Code & Create</span>
+            </h1>
+            <p class="subtitle">Tu Primera Web Profesional</p>
+            <p class="hero-description">Hola, soy <span class="highlight" contenteditable="true" id="userName">Leonel Rondón</span> · Desarrollador web en formación | Creando desde mi edificio 🏢</p>
+            
+            <div class="hero-buttons">
+                <a href="#contacto" class="btn btn-contacto">📩 Escríbeme</a>
+                <a href="registro.html" class="btn btn-registro">🚀 Inscribirme al Taller</a>
+                <a href="https://chat.whatsapp.com/GuZUngOJyTgF4KkHdXacpB" 
+                   target="_blank" 
+                   class="btn btn-whatsapp-hero">
+                    💬 Unirme por WhatsApp
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="sobre-mi" class="glass-card">
+            <h2>👤 Sobre mí</h2>
+            <p class="editable-text" contenteditable="true" id="aboutMe">Soy estudiante de Ingeniería de Sistemas en la UBA, apasionado por el desarrollo web y la tecnología. Me encanta aprender programación y compartir conocimientos con mi comunidad. Actualmente estoy formando parte del servicio comunitario enseñando desarrollo web a jóvenes de la Torre Guayacán.</p>
+        </section>
+
+        <section id="proyectos" class="glass-card">
+            <h2>🚀 Proyectos</h2>
+            <article class="project-card">
+                <h3 contenteditable="true" class="editable-text" id="projectTitle">Mi primera web</h3>
+                <p contenteditable="true" class="editable-text" id="projectDesc">Portafolio personal creado con HTML5, CSS3, JavaScript y PHP seguro.</p>
+                <div class="tags">
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag">PHP</span>
+                </div>
+                <a href="#" class="link-external">Ver en vivo →</a>
+            </article>
+        </section>
+
+        <section id="contacto" class="glass-card">
+            <h2>📩 Contacto</h2>
+            <form id="contactForm" action="php/contacto.php" method="POST">
+                <input type="hidden" name="csrf_token" value="demo_token">
+                
+                <label>
+                    Nombre:
+                    <input type="text" name="nombre" required minlength="2" maxlength="50" placeholder="Ej: Ana García">
+                </label>
+                
+                <label>
+                    Email:
+                    <input type="email" name="email" required placeholder="Ej: ana@correo.com">
+                </label>
+                
+                <label>
+                    Mensaje:
+                    <textarea name="mensaje" required minlength="10" maxlength="500" placeholder="Cuéntame en qué puedo ayudarte..."></textarea>
+                </label>
+                
+                <button type="submit">Enviar mensaje</button>
+                <p class="form-status" id="formStatus" aria-live="polite"></p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© <span id="year"></span> <span contenteditable="true" class="editable-text" id="footerName">Leonel Rondón</span> · Taller Code & Create | Torre Guayacán</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
