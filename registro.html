@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Registro al Taller Code & Create - Torre Guayacán">
+    <title>Inscripción - Taller Code & Create | UBA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    <!-- Aplicar tema oscuro antes de renderizar para evitar parpadeo -->
+    <script>
+        (function () {
+            const t = localStorage.getItem('theme');
+            if (t) document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="registro-container">
+        <h1>📝 Registro al Taller Code & Create</h1>
+        <p>Inscríbete para aprender desarrollo web full-stack (HTML5, CSS3, JavaScript y PHP)</p>
+        <p style="font-size: 0.9rem; opacity: 0.8; margin-top:-1rem;">
+            🏢 Torre Guayacán - Barcelona, Anzoátegui<br>
+            🎓 Proyecto de Servicio Comunitario UBA
+        </p>
+        <!-- ⚠️ CAMBIA ESTA URL POR TU URL DE FORMSPREE -->
+        <form id="registroForm" action="https://formspree.io/f/meebywqk" method="POST">
+            <input type="hidden" name="_subject" value="Nueva inscripción - Code & Create">
+            <input type="hidden" name="_cc" value="tu-email@ejemplo.com">
+            <label>
+                Nombre Completo:*
+                <input type="text" name="nombre" required minlength="3" maxlength="100"
+                    placeholder="Ej: Carlos Rodríguez">
+            </label>
+            <label>
+                Edad:*
+                <input type="number" name="edad" required min="15" max="30" placeholder="Ej: 18">
+                <small style="color: var(--primary); font-size: 0.8rem;">(Requisito: 15-25 años)</small>
+            </label>
+            <label>
+                Correo Electrónico:*
+                <input type="email" name="email" required placeholder="Ej: carlos@email.com">
+            </label>
+            <label>
+                Usuario de GitHub (opcional):
+                <input type="text" name="github_user" placeholder="Ej: carlosr-dev">
+                <small style="color: var(--primary); font-size: 0.8rem;">Si no tienes, créalo en github.com</small>
+            </label>
+            <button type="submit">✅ Inscribirme al Taller</button>
+            <div id="mensaje"></div>
+        </form>
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(79, 70, 229, 0.1); border-radius: 8px;">
+            <p style="font-size: 0.9rem; margin: 0;">
+                <strong>ℹ️ Información del Taller:</strong><br>
+                • 4 sesiones prácticas de 2 horas<br>
+                • Aprende HTML5, CSS3, JavaScript y PHP<br>
+                • Publica tu primer portafolio web<br>
+                • Certificado de participación
+            </p>
+        </div>
+        <a href="index.html" class="btn-volver">← Volver al Inicio</a>
+    </div>
+    <script>
+        document.getElementById('registroForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const mensajeDiv = document.getElementById('mensaje');
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const data = new FormData(form);
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Registrando...';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // ✅ MOSTRAR MENSAJE DE ÉXITO
+                    mensajeDiv.innerHTML = `
+                <div class="registro-exitoso">
+                    <h3>✅ ¡Registro Exitoso!</h3>
+                    <p class="bienvenida">Bienvenido/a, <strong>${data.get('nombre')}</strong></p>
+                    <div class="codigo-confirmacion">
+                        <p class="codigo-label">Tu código de confirmación:</p>
+                        <p class="codigo-valor">CC-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${Math.floor(Math.random() * 9999).toString().padStart(4, '0')}</p>
+                        <p class="codigo-nota">📌 Guárdalo, lo necesitarás el primer día</p>
+                    </div>
+                    <div class="info-taller">
+                        <p>📅 <strong>Inicio del taller:</strong> Próximamente</p>
+                        <p>📍 <strong>Lugar:</strong> Torre Guayacán</p>
+                        <p>📧 Te contactaremos pronto con los detalles</p>
+                    </div>
+                    <p class="grupos-label">📱 Únete a los grupos del taller:</p>
+                    <div class="botones-grupos">
+                        <a href="https://chat.whatsapp.com/GuZUngOJyTgF4KkHdXacpB" target="_blank" class="btn-whatsapp">
+                            💬 Grupo de WhatsApp
+                        </a>
+                    </div>
+                    <p class="nota-final">
+                        Te contactaremos pronto con los detalles del taller.
+                    </p>
+                </div>
+            `;
+                    mensajeDiv.className = 'mensaje-exitoso';
+                    form.reset();
+                    submitBtn.textContent = '✅ Registrado';
+                    mensajeDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    throw new Error('Error en el servidor');
+                }
+            } catch (error) {
+                mensajeDiv.innerHTML = `<p class="mensaje-error">❌ Error de conexión. Inténtalo de nuevo.</p>`;
+                mensajeDiv.className = 'mensaje-error-container';
+                submitBtn.disabled = false;
+                submitBtn.textContent = '✅ Inscribirme al Taller';
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+
+</html>
