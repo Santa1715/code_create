@@ -1,25 +1,15 @@
-/* ============================================
-   PROYECTO: CODE & CREATE
-   Taller de Desarrollo Web para Jóvenes
-   Torre Guayacán - UBA Servicio Comunitario
-   Autor: Leonel Rondón - CI: 32.079.527
-   ============================================ */
-
 document.addEventListener('DOMContentLoaded', () => {
-    
     // 1. GUARDAR Y RECUPERAR INICIALES
     const initialsInput = document.getElementById('userInitials');
     const savedInitials = localStorage.getItem('userInitials');
     if (savedInitials) {
         initialsInput.value = savedInitials;
     }
-
     initialsInput.addEventListener('input', (e) => {
         const value = e.target.value.toUpperCase();
         e.target.value = value;
         localStorage.setItem('userInitials', value);
     });
-
     initialsInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -33,11 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedName) {
         userName.textContent = savedName;
     }
-
     userName.addEventListener('input', () => {
         localStorage.setItem('userName', userName.textContent.trim());
     });
-
     userName.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -51,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedAbout) {
         aboutMe.textContent = savedAbout;
     }
-
     aboutMe.addEventListener('input', () => {
         localStorage.setItem('aboutMe', aboutMe.textContent.trim());
     });
@@ -62,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedTitle) {
         projectTitle.textContent = savedTitle;
     }
-
     projectTitle.addEventListener('input', () => {
         localStorage.setItem('projectTitle', projectTitle.textContent.trim());
     });
@@ -73,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedDesc) {
         projectDesc.textContent = savedDesc;
     }
-
     projectDesc.addEventListener('input', () => {
         localStorage.setItem('projectDesc', projectDesc.textContent.trim());
     });
@@ -84,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedFooter) {
         footerName.textContent = savedFooter;
     }
-
     footerName.addEventListener('input', () => {
         localStorage.setItem('footerName', footerName.textContent.trim());
     });
@@ -95,10 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 8. TEMA OSCURO/CLARO CON PERSISTENCIA
     const toggle = document.getElementById('theme-toggle');
     const savedTheme = localStorage.getItem('theme') || 'light';
-    
     document.documentElement.setAttribute('data-theme', savedTheme);
-    toggle.textContent = savedTheme === 'dark' ? '️' : '🌙';
-
+    toggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
     toggle.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme');
         const next = current === 'dark' ? 'light' : 'dark';
@@ -107,33 +89,33 @@ document.addEventListener('DOMContentLoaded', () => {
         toggle.textContent = next === 'dark' ? '☀️' : '🌙';
     });
 
-    // 9. ENVÍO SEGURO DEL FORMULARIO DE CONTACTO
+    // 9. ENVÍO SEGURO DEL FORMULARIO DE CONTACTO CON FORMSPREE
     const form = document.getElementById('contactForm');
     const status = document.getElementById('formStatus');
 
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            status.textContent = ' Enviando...';
+            status.textContent = '📤 Enviando...';
             status.style.color = 'var(--primary)';
 
             const data = new FormData(form);
 
             try {
-                const res = await fetch('php/contacto.php', {
+                const response = await fetch(form.action, {
                     method: 'POST',
-                    body: data
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
                 });
 
-                const result = await res.json();
-
-                if (result.success) {
+                if (response.ok) {
                     status.textContent = '✅ ¡Mensaje enviado! Responderé pronto.';
                     status.style.color = '#059669';
                     form.reset();
                 } else {
-                    status.textContent = `❌ ${result.message || 'Error al enviar.'}`;
-                    status.style.color = '#dc2626';
+                    throw new Error('Error en el servidor');
                 }
             } catch (error) {
                 status.textContent = '❌ Error de red. Verifica tu conexión.';
@@ -157,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    console.log('%c🎨 Code & Create - Taller de Desarrollo Web', 'color: #4f46e5; font-size: 16px; font-weight: bold;');
-    console.log('%c👨‍💻 Proyecto de Servicio Comunitario UBA', 'color: #7c3aed; font-size: 12px;');
-    console.log('%c📍 Torre Guayacán - Barcelona, Anzoátegui', 'color: #10b981; font-size: 12px;');
+    console.log('%c👨‍💻 Code & Create - Taller de Desarrollo Web', 'color:#4f46e5; font-size: 16px; font-weight: bold;');
+    console.log('%c🎓 Proyecto de Servicio Comunitario UBA', 'color:#7c3aed; font-size: 12px;');
+    console.log('%c🏢 Torre Guayacán - Barcelona, Anzoátegui', 'color:#10b981; font-size: 12px;');
 });
